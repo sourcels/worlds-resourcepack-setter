@@ -4,6 +4,7 @@
   "commands.wrs.error": "Fel vid export: %s",
   "commands.wrs.success": "%d paket har slagits samman till %s",
   "commands.wrs.hint": "Obs: starta om spelet för att tillämpa ändringarna.",
+  "commands.wrs.althint": "Starta världen %s för att tillämpa ändringarna, eller starta om spelet.",
   "commands.wrs.arg.force": "tvinga",
   "commands.wrs.arg.compatible": "kompatibla",
   "commands.wrs.arg.everything": "allt",

@@ -27,11 +27,14 @@
 	"entrypoints": {
 		"client": [
 			"com.shimaper.worldsresourcepacksetter.WorldsResourcepackSetterClient"
-		]
+		],
+        "modmenu": [
+            "com.shimaper.worldsresourcepacksetter.ModMenuIntegration"
+        ]
 	},
     "custom": {
       "modmenu": {
-        "config_screen": "com.shimaper.elytratableenchantment.config.ModMenuIntegration",
+        "config_screen": "com.shimaper.worldsresourcepacksetter.ModMenuIntegration",
         "links": {
           "modmenu.discord": "",
           "modmenu.donate": ""

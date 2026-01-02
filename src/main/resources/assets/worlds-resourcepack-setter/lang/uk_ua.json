@@ -4,6 +4,7 @@
   "commands.wrs.error": "Помилка під час експорту: %s",
   "commands.wrs.success": "Успішно об’єднано %d пакетів у %s",
   "commands.wrs.hint": "Примітка: перезапустіть гру, щоб застосувати зміни.",
+  "commands.wrs.althint": "Запустіть світ %s, щоб застосувати зміни, або перезапустіть гру.",
   "commands.wrs.arg.force": "примусово",
   "commands.wrs.arg.compatible": "сумісні",
   "commands.wrs.arg.everything": "усе",

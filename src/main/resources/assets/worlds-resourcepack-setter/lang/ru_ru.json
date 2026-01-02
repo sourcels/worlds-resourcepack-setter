@@ -4,6 +4,7 @@
   "commands.wrs.error": "Ошибка при экспорте: %s",
   "commands.wrs.success": "Успешно объединено %d пакетов в %s",
   "commands.wrs.hint": "Примечание: Перезапустите игру для применения.",
+  "commands.wrs.althint": "Запустите мир %s чтобы применить, или перезапустите игру",
   "commands.wrs.arg.force": "принудительно",
   "commands.wrs.arg.compatible": "совместимые",
   "commands.wrs.arg.everything": "все",

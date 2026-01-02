@@ -4,6 +4,7 @@
   "commands.wrs.error": "Error during export: %s",
   "commands.wrs.success": "Successfully combined %d packs into %s",
   "commands.wrs.hint": "Note: restart the game to apply changes.",
+  "commands.wrs.althint": "Launch the world %s to apply, or restart the game.",
   "commands.wrs.arg.force": "force",
   "commands.wrs.arg.compatible": "compatible",
   "commands.wrs.arg.everything": "everything",

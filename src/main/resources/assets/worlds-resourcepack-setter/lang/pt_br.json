@@ -4,6 +4,7 @@
   "commands.wrs.error": "Erro durante a exportação: %s",
   "commands.wrs.success": "%d pacotes combinados com sucesso em %s",
   "commands.wrs.hint": "Observação: reinicie o jogo para aplicar.",
+  "commands.wrs.althint": "Inicie o mundo %s para aplicar as alterações ou reinicie o jogo.",
   "commands.wrs.arg.force": "forçar",
   "commands.wrs.arg.compatible": "compatíveis",
   "commands.wrs.arg.everything": "tudo",

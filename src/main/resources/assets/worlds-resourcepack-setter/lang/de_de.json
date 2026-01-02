@@ -4,6 +4,7 @@
   "commands.wrs.error": "Fehler beim Export: %s",
   "commands.wrs.success": "Erfolgreich %d Pakete in %s zusammengeführt",
   "commands.wrs.hint": "Hinweis: Starte das Spiel neu, um die Änderungen zu übernehmen.",
+  "commands.wrs.althint": "Starte die Welt %s, um die Änderungen zu übernehmen, oder starte das Spiel neu.",
   "commands.wrs.arg.force": "erzwingen",
   "commands.wrs.arg.compatible": "kompatibel",
   "commands.wrs.arg.everything": "alles",

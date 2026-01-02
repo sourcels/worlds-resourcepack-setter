@@ -4,6 +4,7 @@
   "commands.wrs.error": "エクスポート中にエラーが発生しました：%s",
   "commands.wrs.success": "%s に %d 個のパックを正常に統合しました",
   "commands.wrs.hint": "注意: 変更を適用するにはゲームを再起動してください。",
+  "commands.wrs.althint": "適用するにはワールド %s を起動するか、ゲームを再起動してください。",
   "commands.wrs.arg.force": "強制",
   "commands.wrs.arg.compatible": "互換",
   "commands.wrs.arg.everything": "すべて",
