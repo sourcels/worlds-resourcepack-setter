@@ -22,12 +22,16 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
-
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipOutputStream;
 
 public class WorldsResourcepackSetterClient implements ClientModInitializer {
     private static final Logger LOGGER = LoggerFactory.getLogger("WRS");
@@ -67,23 +71,25 @@ public class WorldsResourcepackSetterClient implements ClientModInitializer {
             return 0;
         }
 
-        Path targetRoot = client.getSingleplayerServer().getWorldPath(LevelResource.ROOT).resolve("resources");
-
+        Path targetZip = client.getSingleplayerServer().getWorldPath(LevelResource.ROOT).resolve("resources.zip");
         context.getSource().sendFeedback(Component.translatable("commands.wrs.start", compatibility, source).withStyle(ChatFormatting.GRAY));
 
         CompletableFuture.runAsync(() -> {
             try {
-                if (Files.exists(targetRoot)) {
-                    deleteDirectoryRecursively(targetRoot);
+                if (Files.exists(targetZip)) {
+                    Files.delete(targetZip);
                 }
-                Files.createDirectories(targetRoot);
 
-                int count = processResourcePacks(compatibility, source, targetRoot);
-                createPackMcmeta(targetRoot);
+                try (ZipOutputStream zos = new ZipOutputStream(Files.newOutputStream(targetZip))) {
+                    zos.setLevel(ZipOutputStream.STORED);
 
-                client.execute(() -> {
-                    context.getSource().sendFeedback(Component.translatable("commands.wrs.success", count).withStyle(ChatFormatting.GREEN));
-                });
+                    int count = processResourcePacks(compatibility, source, zos);
+                    createPackMcmeta(zos);
+
+                    client.execute(() -> {
+                        context.getSource().sendFeedback(Component.translatable("commands.wrs.success", count).withStyle(ChatFormatting.GREEN));
+                    });
+                }
             } catch (Exception e) {
                 LOGGER.error("Export failed", e);
                 client.execute(() -> context.getSource().sendError(Component.translatable("commands.wrs.error", e.getMessage())));
@@ -92,7 +98,7 @@ public class WorldsResourcepackSetterClient implements ClientModInitializer {
         return 1;
     }
 
-    private int processResourcePacks(String compatibility, String source, Path targetRoot) {
+    private int processResourcePacks(String compatibility, String source, ZipOutputStream zos) {
         var packRepository = Minecraft.getInstance().getResourcePackRepository();
         List<Pack> packsToProcess = new ArrayList<>();
 
@@ -125,22 +131,22 @@ public class WorldsResourcepackSetterClient implements ClientModInitializer {
                     Path zipPath = globalResourcePacksDir.resolve(fileName);
 
                     if (Files.exists(zipPath) && !Files.isDirectory(zipPath)) {
-                        extractAssetsFromZip(zipPath, targetRoot);
+                        extractAssetsFromZip(zipPath, zos);
                     } else {
-                        copyPackAssets(pack, targetRoot);
+                        copyPackAssets(pack, zos);
                     }
                 } else {
-                    copyPackAssets(pack, targetRoot);
+                    copyPackAssets(pack, zos);
                 }
                 successCount++;
             } catch (Exception e) {
-                LOGGER.error("Failed to process pack: " + packId, e);
+                LOGGER.error("Failed to process pack: {}", packId, e);
             }
         }
         return successCount;
     }
 
-    private void extractAssetsFromZip(Path zipFilePath, Path targetRoot) {
+    private void extractAssetsFromZip(Path zipFilePath, ZipOutputStream zos) {
         LOGGER.info("[WRS] Extracting from ZIP: {}", zipFilePath.getFileName());
         try (FileSystem zipFs = FileSystems.newFileSystem(zipFilePath, (ClassLoader) null)) {
             Path assetsInZip = zipFs.getPath("/assets");
@@ -153,9 +159,13 @@ public class WorldsResourcepackSetterClient implements ClientModInitializer {
                             relativePath = relativePath.substring(1);
                         }
 
-                        Path destPath = targetRoot.resolve(relativePath);
-                        Files.createDirectories(destPath.getParent());
-                        Files.copy(file, destPath, StandardCopyOption.REPLACE_EXISTING);
+                        if (!relativePath.equals(relativePath.toLowerCase(Locale.ROOT))) {
+                            return FileVisitResult.CONTINUE;
+                        }
+
+                        try (InputStream is = Files.newInputStream(file)) {
+                            writeToZip(zos, relativePath, is);
+                        }
                         return FileVisitResult.CONTINUE;
                     }
                 });
@@ -165,7 +175,7 @@ public class WorldsResourcepackSetterClient implements ClientModInitializer {
         }
     }
 
-    private void copyPackAssets(Pack pack, Path targetRoot) {
+    private void copyPackAssets(Pack pack, ZipOutputStream zos) {
         LOGGER.info("[WRS] Getting pack: {}", pack.getId());
         try (PackResources resources = pack.open()) {
             var namespaces = resources.getNamespaces(PackType.CLIENT_RESOURCES);
@@ -175,16 +185,16 @@ public class WorldsResourcepackSetterClient implements ClientModInitializer {
 
             for (String namespace : namespaces) {
                 resources.listResources(PackType.CLIENT_RESOURCES, namespace, "", (location, streamSupplier) -> {
-                    try {
-                        Path destPath = targetRoot.resolve("assets")
-                                .resolve(location.getNamespace())
-                                .resolve(location.getPath());
-                        Files.createDirectories(destPath.getParent());
-                        try (InputStream is = streamSupplier.get()) {
-                            Files.copy(is, destPath, StandardCopyOption.REPLACE_EXISTING);
-                        }
+                    String fullPath = "assets/" + location.getNamespace() + "/" + location.getPath();
+
+                    if (!fullPath.equals(fullPath.toLowerCase(Locale.ROOT))) {
+                        return;
+                    }
+
+                    try (InputStream is = streamSupplier.get()) {
+                        writeToZip(zos, fullPath, is);
                     } catch (IOException e) {
-                        LOGGER.error("[WRS] Error copying files {}: {}", location, e.getMessage());
+                        //
                     }
                 });
             }
@@ -194,7 +204,22 @@ public class WorldsResourcepackSetterClient implements ClientModInitializer {
         }
     }
 
-    private void createPackMcmeta(Path targetDir) throws IOException {
+    private void writeToZip(ZipOutputStream zos, String path, InputStream is) throws IOException {
+        try {
+            ZipEntry entry = new ZipEntry(path);
+            zos.putNextEntry(entry);
+            byte[] buffer = new byte[4096];
+            int len;
+            while ((len = is.read(buffer)) > 0) {
+                zos.write(buffer, 0, len);
+            }
+            zos.closeEntry();
+        } catch (ZipException e) {
+            //
+        }
+    }
+
+    private void createPackMcmeta(ZipOutputStream zos) throws IOException {
         JsonObject root = new JsonObject();
         JsonObject packObj = new JsonObject();
         packObj.addProperty("pack_format", 34);
@@ -204,10 +229,16 @@ public class WorldsResourcepackSetterClient implements ClientModInitializer {
 
         packObj.add("description", descObj);
         root.add("pack", packObj);
-        Files.writeString(targetDir.resolve("pack.mcmeta"), GSON.toJson(root));
+
+        String json = GSON.toJson(root);
+        ZipEntry entry = new ZipEntry("pack.mcmeta");
+        zos.putNextEntry(entry);
+        zos.write(json.getBytes(StandardCharsets.UTF_8));
+        zos.closeEntry();
     }
 
     private void deleteDirectoryRecursively(Path path) throws IOException {
+        if (!Files.exists(path)) return;
         Files.walkFileTree(path, new SimpleFileVisitor<>() {
             @Override
             public @NotNull FileVisitResult visitFile(@NotNull Path file, @NotNull BasicFileAttributes attrs) throws IOException {
