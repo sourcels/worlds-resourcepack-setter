@@ -1,0 +1,14 @@
+{
+  "commands.wrs.only_singleplayer": "Este comando funciona apenas no modo singleplayer!",
+  "commands.wrs.start": "Iniciando exportação (%s + %s)...",
+  "commands.wrs.error": "Erro durante a exportação: %s",
+  "commands.wrs.success": "Concluído! Recursos de %s pacotes foram incorporados com sucesso ao mundo.",
+  "commands.wrs.arg.force": "forçar",
+  "commands.wrs.arg.compatible": "compatíveis",
+  "commands.wrs.arg.everything": "tudo",
+  "commands.wrs.arg.externed": "externos",
+
+  "modmenu.nameTranslation.worlds-resourcepack-setter": "World's Resourcepack Setter",
+  "modmenu.descriptionTranslation.worlds-resourcepack-setter": "Um mod para incorporar pacotes de recursos ao mundo atual.",
+  "modmenu.summaryTranslation.worlds-resourcepack-setter": "Incorpora pacotes de recursos ao mundo atual."
+}

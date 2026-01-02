@@ -9,8 +9,11 @@
       "java": ">=21",
       "fabric-api": "*"
     },
+    "recommends": {
+      "modmenu": "*"
+    },
 	"name": "World's Resourcepack Setter",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A mod for embedding resource packs into the current world.",
 	"authors": [
 		"shimaper"
 	],

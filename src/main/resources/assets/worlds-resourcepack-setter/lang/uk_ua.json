@@ -1,0 +1,14 @@
+{
+  "commands.wrs.only_singleplayer": "Ця команда працює лише в одиночному світі!",
+  "commands.wrs.start": "Запуск експорту (%s + %s)...",
+  "commands.wrs.error": "Помилка під час експорту: %s",
+  "commands.wrs.success": "Готово! Ресурси з %s паків успішно вбудовано у світ.",
+  "commands.wrs.arg.force": "примусово",
+  "commands.wrs.arg.compatible": "сумісні",
+  "commands.wrs.arg.everything": "усе",
+  "commands.wrs.arg.externed": "сторонні",
+
+  "modmenu.nameTranslation.worlds-resourcepack-setter": "World's Resourcepack Setter",
+  "modmenu.descriptionTranslation.worlds-resourcepack-setter": "Мод для вбудовування наборів ресурсів у поточний світ.",
+  "modmenu.summaryTranslation.worlds-resourcepack-setter": "Вбудовує набори ресурсів у поточний світ."
+}

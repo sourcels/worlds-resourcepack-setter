@@ -1,0 +1,14 @@
+{
+  "commands.wrs.only_singleplayer": "This command works only in singleplayer!",
+  "commands.wrs.start": "Starting export (%s + %s)...",
+  "commands.wrs.error": "Error during export: %s",
+  "commands.wrs.success": "Done! Resources from %s packs have been successfully embedded into the world.",
+  "commands.wrs.arg.force": "force",
+  "commands.wrs.arg.compatible": "compatible",
+  "commands.wrs.arg.everything": "everything",
+  "commands.wrs.arg.externed": "external",
+
+  "modmenu.nameTranslation.worlds-resourcepack-setter": "World's Resourcepack Setter",
+  "modmenu.descriptionTranslation.worlds-resourcepack-setter": "A mod for embedding resource packs into the current world.",
+  "modmenu.summaryTranslation.worlds-resourcepack-setter": "Embeds resource packs into the current world."
+}

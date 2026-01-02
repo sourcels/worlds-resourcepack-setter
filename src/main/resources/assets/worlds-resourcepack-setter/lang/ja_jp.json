@@ -1,0 +1,14 @@
+{
+  "commands.wrs.only_singleplayer": "このコマンドはシングルプレイヤーのワールドでのみ使用できます！",
+  "commands.wrs.start": "エクスポートを開始しています（%s + %s）...",
+  "commands.wrs.error": "エクスポート中にエラーが発生しました：%s",
+  "commands.wrs.success": "完了！%s 個のパックからのリソースがワールドに正常に組み込まれました。",
+  "commands.wrs.arg.force": "強制",
+  "commands.wrs.arg.compatible": "互換",
+  "commands.wrs.arg.everything": "すべて",
+  "commands.wrs.arg.externed": "外部",
+
+  "modmenu.nameTranslation.worlds-resourcepack-setter": "World's Resourcepack Setter",
+  "modmenu.descriptionTranslation.worlds-resourcepack-setter": "現在のワールドにリソースパックを組み込むためのMODです。",
+  "modmenu.summaryTranslation.worlds-resourcepack-setter": "現在のワールドにリソースパックを組み込みます。"
+}
