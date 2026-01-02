@@ -1,0 +1,39 @@
+{
+	"schemaVersion": 1,
+	"id": "worlds-resourcepack-setter",
+	"version": "${version}+fabric+1.21.11",
+    "environment": "client",
+    "depends": {
+      "fabricloader": ">=0.18.4",
+      "minecraft": "~1.21.11",
+      "java": ">=21",
+      "fabric-api": "*"
+    },
+	"name": "World's Resourcepack Setter",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"shimaper"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod",
+        "issues": "https://github.com/sourcels/elytra-table-enchantment/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/worlds-resourcepack-setter/icon.png",
+	"entrypoints": {
+		"client": [
+			"com.shimaper.worldsresourcepacksetter.WorldsResourcepackSetterClient"
+		]
+	},
+    "custom": {
+      "modmenu": {
+        "config_screen": "com.shimaper.elytratableenchantment.config.ModMenuIntegration",
+        "links": {
+          "modmenu.discord": "",
+          "modmenu.donate": ""
+        },
+        "update_checker": true
+      }
+    }
+}

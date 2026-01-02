@@ -1,1 +1,1 @@
-# worlds_resourcepack_setter
+# World's Resourcepack Setter
