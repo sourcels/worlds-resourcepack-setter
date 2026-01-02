@@ -2,13 +2,14 @@
   "commands.wrs.only_singleplayer": "Detta kommando fungerar endast i enspelarvärldar!",
   "commands.wrs.start": "Startar export (%s + %s)...",
   "commands.wrs.error": "Fel vid export: %s",
-  "commands.wrs.success": "Klart! Resurser från %s paket har framgångsrikt integrerats i världen.",
+  "commands.wrs.success": "%d paket har slagits samman till %s",
+  "commands.wrs.hint": "Obs: starta om spelet för att tillämpa ändringarna.",
   "commands.wrs.arg.force": "tvinga",
   "commands.wrs.arg.compatible": "kompatibla",
   "commands.wrs.arg.everything": "allt",
   "commands.wrs.arg.externed": "externa",
 
-  "modmenu.nameTranslation.worlds-resourcepack-setter": "World's Resourcepack Setter",
+  "modmenu.nameTranslation.worlds-resourcepack-setter": "World's Resourcepack Setter (WRS)",
   "modmenu.descriptionTranslation.worlds-resourcepack-setter": "En mod för att bädda in resurspaket i den aktuella världen.",
   "modmenu.summaryTranslation.worlds-resourcepack-setter": "Bäddar in resurspaket i den aktuella världen."
 }

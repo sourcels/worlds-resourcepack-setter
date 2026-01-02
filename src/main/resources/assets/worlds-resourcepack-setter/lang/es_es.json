@@ -2,13 +2,14 @@
   "commands.wrs.only_singleplayer": "¡Este comando solo funciona en un mundo de un jugador!",
   "commands.wrs.start": "Iniciando exportación (%s + %s)...",
   "commands.wrs.error": "Error durante la exportación: %s",
-  "commands.wrs.success": "¡Listo! Los recursos de %s paquetes se han integrado correctamente en el mundo.",
+  "commands.wrs.success": "Se combinaron correctamente %d paquetes en %s",
+  "commands.wrs.hint": "Nota: reinicia el juego para aplicar los cambios.",
   "commands.wrs.arg.force": "forzar",
   "commands.wrs.arg.compatible": "compatibles",
   "commands.wrs.arg.everything": "todo",
   "commands.wrs.arg.externed": "externos",
 
-  "modmenu.nameTranslation.worlds-resourcepack-setter": "World's Resourcepack Setter",
+  "modmenu.nameTranslation.worlds-resourcepack-setter": "World's Resourcepack Setter (WRS)",
   "modmenu.descriptionTranslation.worlds-resourcepack-setter": "Un mod para integrar paquetes de recursos en el mundo actual.",
   "modmenu.summaryTranslation.worlds-resourcepack-setter": "Integra paquetes de recursos en el mundo actual."
 }

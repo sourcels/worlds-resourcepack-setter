@@ -2,13 +2,14 @@
   "commands.wrs.only_singleplayer": "此命令仅在单人世界中可用！",
   "commands.wrs.start": "开始导出（%s + %s）...",
   "commands.wrs.error": "导出时发生错误：%s",
-  "commands.wrs.success": "完成！来自 %s 个资源包的资源已成功嵌入世界。",
+  "commands.wrs.success": "已成功将 %d 个资源包合并到 %s 中",
+  "commands.wrs.hint": "注意：请重启游戏以应用更改。",
   "commands.wrs.arg.force": "强制",
   "commands.wrs.arg.compatible": "兼容",
   "commands.wrs.arg.everything": "全部",
   "commands.wrs.arg.externed": "外部",
 
-  "modmenu.nameTranslation.worlds-resourcepack-setter": "World's Resourcepack Setter",
+  "modmenu.nameTranslation.worlds-resourcepack-setter": "World's Resourcepack Setter (WRS)",
   "modmenu.descriptionTranslation.worlds-resourcepack-setter": "一个用于将资源包嵌入到当前世界的模组。",
   "modmenu.summaryTranslation.worlds-resourcepack-setter": "将资源包嵌入到当前世界。"
 }
