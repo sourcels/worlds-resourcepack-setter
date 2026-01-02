@@ -10,7 +10,6 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -38,7 +37,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipOutputStream;
 
-
 public class WorldsResourcepackSetterClient implements ClientModInitializer {
     private static final Logger LOGGER = LoggerFactory.getLogger("WRS");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
@@ -52,7 +50,6 @@ public class WorldsResourcepackSetterClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         loadConfig();
-
         checkPendingWorldsOnStart();
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
@@ -78,22 +75,17 @@ public class WorldsResourcepackSetterClient implements ClientModInitializer {
                     )
             );
         });
-
-        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
-            if (client.getSingleplayerServer() != null) {
-                Path worldPath = client.getSingleplayerServer().getWorldPath(LevelResource.ROOT);
-                tryCleanAndApplyLatest(worldPath);
-            }
-        });
     }
 
     private void checkPendingWorldsOnStart() {
+        LOGGER.info("[WRS] Checking for pending resource updates in worlds...");
         Iterator<String> iterator = pendingWorlds.iterator();
         while (iterator.hasNext()) {
             Path worldPath = Paths.get(iterator.next());
             if (Files.exists(worldPath)) {
                 if (tryCleanAndApplyLatest(worldPath)) {
                     iterator.remove();
+                    LOGGER.info("[WRS] Successfully updated resources for world: {}", worldPath);
                 }
             } else {
                 iterator.remove();
@@ -129,7 +121,6 @@ public class WorldsResourcepackSetterClient implements ClientModInitializer {
                 Path mainZip = worldPath.resolve("resources.zip");
                 Files.deleteIfExists(mainZip);
                 Files.move(latestFile, mainZip, StandardCopyOption.REPLACE_EXISTING);
-                LOGGER.info("[WRS] Applied latest pack in {}: {}", worldPath, latestFile.getFileName());
 
                 for (Path path : toDelete) {
                     Files.deleteIfExists(path);
@@ -137,7 +128,7 @@ public class WorldsResourcepackSetterClient implements ClientModInitializer {
                 return true;
             }
         } catch (IOException e) {
-            LOGGER.error("[WRS] Error processing world folder: {}", worldPath, e);
+            LOGGER.error("[WRS] Error processing folder during startup: {}", worldPath, e);
         }
         return false;
     }
@@ -197,7 +188,7 @@ public class WorldsResourcepackSetterClient implements ClientModInitializer {
     private void saveConfig() {
         try (Writer writer = Files.newBufferedWriter(configFile)) {
             GSON.toJson(pendingWorlds, writer);
-        } catch (Exception e) {
+        } catch (IOException e) {
             LOGGER.error("Failed to save WRS config", e);
         }
     }
