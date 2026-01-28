@@ -18,9 +18,9 @@
 		"shimaper"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod",
-        "issues": "https://github.com/sourcels/elytra-table-enchantment/issues"
+		"homepage": "https://modrinth.com/mod/worlds-resourcepack-setter",
+		"sources": "https://github.com/sourcels/worlds-resourcepack-setter",
+        "issues": "https://github.com/sourcels/worlds-resourcepack-setter/issues"
 	},
 	"license": "MIT",
 	"icon": "assets/worlds-resourcepack-setter/icon.png",
